@@ -4,6 +4,7 @@
     <title><?= $title; ?></title>
     <base href="<?= $base_url; ?>">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="assets/images/favicon.png">
 
     <!-- CSS plugins -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -17,12 +18,31 @@
 
 <body>
     <section class="layout">
+        <!-- Mobile header -->
         <section class="header">
             <a class="menu-button" onclick="toggleSidenav();"><i class="fas fa-bars"></i></a>
             <a href="<?= $version; ?>">
                 <?= $application; ?>
             </a>
+            <?php if (!empty($git)) : ?>
+                <a href="<?= $git; ?>" target="_blank" class="menu-edit"><i class="fas fa-pencil-alt"></i></a>
+            <?php endif; ?>
         </section>
+
+        <!-- Edit on GitHub button -->
+        <?php if (!empty($git)) : ?>
+            <section class="edit">
+                <a href="<?= $git; ?>" target="_blank">
+                    <i class="fas fa-pencil-alt"></i>
+                    <span>
+                        Edit this page<br>
+                        <strong>on GitHub</strong>
+                    </span>
+                </a>
+            </section>
+        <?php endif; ?>
+
+        <!-- Sidenav menu -->
         <section class="menu">
             <a href="<?= $version; ?>">
                 <img src="assets/images/logo.png" class="logo">
@@ -30,17 +50,31 @@
             <div class="dropdown">
                 <a class="dropdown-toggle" data-bs-toggle="dropdown">
                     <?= $version; ?>
+                    <?php if ($version == $last_version) : ?>
+                        <span>(latest)</span>
+                    <?php endif; ?>
                 </a>
                 <ul class="dropdown-menu">
                     <?php foreach ($version_list as $v) : ?>
-                        <li><a href="<?= $v; ?>" class="dropdown-item" href="#"><?= $v; ?></a></li>
+                        <li>
+                            <a href="<?= $v; ?>" class="dropdown-item" href="#">
+                                <?= $v; ?>
+                                <?php if ($v == $last_version) : ?>
+                                    <span>(latest)</span>
+                                <?php endif; ?>
+                            </a>
+                        </li>
                     <?php endforeach; ?>
                 </ul>
             </div>
             <?= $menu; ?>
         </section>
+
+        <!-- Content -->
         <section class="content">
             <?= $content; ?>
+
+            <!-- Copyright -->
             <section class="copyright">
                 <hr>
                 Powered by <a href="https://github.com/eugabrielsilva/butterdocs" target="_blank">ButterDocs</a>

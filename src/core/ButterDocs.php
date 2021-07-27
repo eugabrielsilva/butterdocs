@@ -37,6 +37,12 @@
         private static $lastVersion;
 
         /**
+         * Holds the current route.
+         * @var string
+         */
+        private static $route;
+
+        /**
          * Creates a new ButterDocs application.
          */
         public function __construct(){
@@ -67,8 +73,10 @@
             // Gets the URL route
             if(empty($_GET['route'])){
                 $file = 'docs/' . self::$version . '/home.md';
+                self::$route = 'home';
             }else{
                 $file = trim(strtolower($_GET['route']));
+                self::$route = $file;
                 $file = 'docs/' . self::$version . '/' . $file . '.md';
             }
 
@@ -79,7 +87,11 @@
             // Validate docs content
             if(!file_exists($file)){
                 http_response_code(404);
-                return $this->view('404.phtml');
+                return $this->view('404.phtml', [
+                    'title' => 'Page not found | ' . APP_CONFIG['application'],
+                    'theme' => APP_CONFIG['theme'],
+                    'base_url' => self::$baseUrl
+                ]);
             }
 
             // Gets docs content
@@ -109,9 +121,10 @@
                 'content' => $content,
                 'theme' => APP_CONFIG['theme'],
                 'application' => APP_CONFIG['application'],
+                'git' => APP_CONFIG['git_edit'] ? (trim(APP_CONFIG['git_url'], '/') . '/' . $file) : '',
                 'base_url' => self::$baseUrl,
                 'version' => self::$version,
-                'version_list' => self::$versionList,
+                'version_list' => array_reverse(self::$versionList),
                 'last_version' => self::$lastVersion
             ]);
         }
@@ -136,9 +149,18 @@
         private function doReplaces(string $content){
             // Replaces %%version%% tag
             $content = preg_replace('/(?<!\\\)%%version%%/i', self::$version, $content);
+            
+            // Replaces %%latest%% tag
+            $content = preg_replace('/(?<!\\\)%%latest%%/i', self::$lastVersion, $content);
 
-            // Replaces %%version%% tag ignores
-            $content = preg_replace('/\\\%%version%%/i', '%%version%%', $content);
+            // Replaces %%app%% tag
+            $content = preg_replace('/(?<!\\\)%%app%%/i', APP_CONFIG['application'], $content);
+
+            // Replaces %%route%% tag
+            $content = preg_replace('/(?<!\\\)%%route%%/i', self::$route, $content);
+
+            // Replaces tag ignores
+            $content = preg_replace('/\\\%%(.+)%%/i', '%%$1%%', $content);
 
             // Returns result
             return $content;
