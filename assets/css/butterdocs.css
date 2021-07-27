@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Oxygen+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,900&display=swap');
 
 ::-webkit-scrollbar {
     width: 8px;
@@ -15,6 +15,9 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-size: 16px;
 }
 
 section.layout {
@@ -29,20 +32,23 @@ section.header {
     left: 0;
     width: 100%;
     z-index: 1;
-    background-color: var(--primary-color);
+    background-color: var(--header-bg-color);
     padding: 15px 60px;
     text-align: center;
-    color: var(--header-text-color);
     display: none;
     font-size: 18px;
 }
 
 section.header a {
+    color: var(--header-text-color);
+    text-decoration: none;
+}
+
+section.header .menu-button {
     position: absolute;
     left: 20px;
     top: calc(50% - 10px);
     font-size: 20px;
-    color: var(--header-text-color);
 }
 
 section.menu {
@@ -100,27 +106,78 @@ section.content:hover::-webkit-scrollbar-thumb {
     background: var(--secondary-color);
 }
 
+section.content a {
+    color: var(--primary-color);
+}
+
+section.content code:not(.hljs) {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+section.content table {
+    width: 100%;
+}
+
+section.content table thead th {
+    padding: 10px 5px;
+    border-bottom: 1px solid var(--primary-color);
+}
+
+section.content table tbody tr:nth-of-type(odd) {
+    background-color: var(--code-block-color);
+}
+
+section.content table tbody td {
+    padding: 10px 5px;
+    border-bottom: 1px solid var(--menu-border-color);
+}
+
+section.content blockquote {
+    background-color: var(--code-block-color);
+    padding: 10px 20px;
+    border-left: 5px solid var(--primary-color);
+}
+
+section.content blockquote p {
+    margin-bottom: 0;
+}
+
 section.content h1 {
     font-weight: 500;
-    font-size: 32px;
+    font-size: 2em;
     color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+section.content h2 {
+    font-weight: 600;
+    font-size: 1.5em;
     margin-bottom: 20px;
 }
 
 section.content h3 {
     font-weight: 600;
-    font-size: 18px;
+    font-size: 1.2em;
     margin-top: 30px;
 }
 
-section.content pre {
-    background-color: var(--code-block-color);
-    padding: 10px;
-    font-family: 'Oxygen Mono', monospace !important;
+section.content h4 {
+    font-weight: 600;
+    font-size: 1.1em;
+    margin-top: 30px;
+}
+
+section.content h5,
+h6 {
+    font-weight: 600;
+    font-size: 1em;
+    margin-top: 30px;
 }
 
 section.content pre * {
-    font-family: 'Oxygen Mono', monospace !important;
+    font-weight: inherit;
+    font-family: 'Source Code Pro', monospace !important;
 }
 
 section.copyright {
@@ -132,6 +189,10 @@ section.copyright hr {
 }
 
 @media (max-width: 767px) {
+    body {
+        font-size: 14px;
+    }
+
     section.menu {
         margin-left: -250px;
         padding: 10px 20px;

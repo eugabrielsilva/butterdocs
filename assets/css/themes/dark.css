@@ -1,0 +1,14 @@
+/* Syntax highlighter theme (from https://highlightjs.org) */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/github-dark.min.css');
+
+/* Theme colors */
+:root {
+    --bg-color: #212121;
+    --text-color: #ffffff;
+    --primary-color: #bdbdbd;
+    --secondary-color: #757575;
+    --code-block-color: #f8f8f8;
+    --menu-border-color: #424242;
+    --header-bg-color: #424242;
+    --header-text-color: #ffffff;
+}

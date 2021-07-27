@@ -140,8 +140,7 @@
             // Replaces %%version%% tag ignores
             $content = preg_replace('/\\\%%version%%/i', '%%version%%', $content);
 
-            // Replaces syntax highliter tags
-            $content = preg_replace('/<pre><code class="(.+)">/i', '<pre><code class="prettyprint $1">', $content);
+            // Returns result
             return $content;
         }
 

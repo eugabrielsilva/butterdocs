@@ -1,4 +1,8 @@
+// Mobile sidenav menu
+const sidenav = document.querySelector('section.menu');
 function toggleSidenav() {
-    let el = document.querySelector('section.menu');
-    el.classList.toggle('show');
+    sidenav.classList.toggle('show');
 }
+
+// Syntax highlighter
+hljs.highlightAll();
