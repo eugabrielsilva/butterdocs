@@ -1,16 +1,16 @@
 # Butter basics
-ButterDocs uses a Markdown parser to format your documentation files.
+- ButterDocs uses a flavored Markdown parser to format your documentation files in real time.
 
-Your docs files are stored into `docs` folder.
+- Your docs files are stored into `docs` folder.
 
-Inside the first level of the `docs` folder, you will create a folder for **each version of your application**.
+- Inside the first level of the `docs` folder, you must create a folder for **each version of your application**.
 
-In the version folder, place your `.md` files. You can also split the files into folders, as you wish.
+- In the version folder, place your `.md` files. You can also split the files into folders, as you wish.
 
-ButterDocs will use the folder and file names to create the corresponding URL routes, so remember to use valid URL characters.
+- ButterDocs will use the folder and file names to create the corresponding URL routes, so remember to use valid URL characters.
 We recommend using only letters and dashes on the filenames.
 
->**Important:** In case-sensitive hosts you may run into problems when using multiple cases in your filenames. To avoid this, use only lowercased names.
+> **Important:** In case-sensitive hosts you may run into problems when using multiple cases in your filenames. To avoid this, use only lowercased names.
 
 ### Special files
 There are two files inside each version folder that will be treated differently:
