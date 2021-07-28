@@ -1,5 +1,7 @@
+# Disable folder indexes and automatic extension loading
 Options -Indexes -MultiViews
 
+# Route everything to ButterDocs
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d

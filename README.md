@@ -8,7 +8,7 @@
 </p>
 
 ## Create tasty documentations
-**ButterDocs** is a lightweight documentation website generator written in PHP. Simply create your Markdown files and ButterDocs will do the rest for you, creating a beautiful and responsive website with your docs.
+ButterDocs is a lightweight documentation website generator written in PHP. Simply create your Markdown files and ButterDocs will do the rest for you, creating a beautiful and responsive website with your docs.
 
 ## Features
 - Support for multiple documentation versions
@@ -17,9 +17,18 @@
 - Automatic routing
 - Responsive layout
 - Supports direct editing on GitHub
+- Large compatibility with all basic hosting providers
+
+## Getting started
+[Explore the documentation](https://eugabrielsilva.tk/butterdocs) to know how to start using ButterDocs to create tasty documentations.
+
+The documentation website itself was made with ButterDocs, so this is a greate example on how to get started. The docs source code is bundled within the project.
 
 ## Dependencies
 - [Parsedown](https://parsedown.org)
 - [highlight.js](https://highlightjs.org)
 - [Bootstrap](https://getbootstrap.com)
 - [Font Awesome](https://fontawesome.com)
+
+## Credits
+ButterDocs is currently being developed by [Gabriel Silva](https://eugabrielsilva.tk).

@@ -1,2 +1,0 @@
-### Introduction
-- [Welcome](%%version%%/home)

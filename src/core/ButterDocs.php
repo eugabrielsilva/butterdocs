@@ -16,31 +16,31 @@
          * Holds the application base url.
          * @var string
          */
-        private static $baseUrl;
+        private $baseUrl;
 
         /**
          * Holds the current version.
          * @var string
          */
-        private static $version;
+        private $version;
 
         /**
          * Holds the version list.
          * @var array
          */
-        private static $versionList;
+        private $versionList;
 
         /**
          * Holds the latest version.
          * @var string
          */
-        private static $lastVersion;
+        private $lastVersion;
 
         /**
          * Holds the current route.
          * @var string
          */
-        private static $route;
+        private $route;
 
         /**
          * Creates a new ButterDocs application.
@@ -48,15 +48,15 @@
         public function __construct(){
             // Sets the base URL
             $folder = trim(substr($_SERVER['PHP_SELF'], 0, strpos($_SERVER['PHP_SELF'], '/index.php')), '/');
-            self::$baseUrl = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . '/' . $folder . (!empty($folder) ? '/' : '');
+            $this->baseUrl = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . '/' . $folder . (!empty($folder) ? '/' : '');
 
             // Gets the version list
             foreach(glob('docs/*', GLOB_ONLYDIR) as $dir){
-                self::$versionList[] = preg_replace('/docs\//', '', $dir, 1);
+                $this->versionList[] = preg_replace('/docs\//', '', $dir, 1);
             }
 
             // Gets the last version
-            self::$lastVersion = end(self::$versionList);
+            $this->lastVersion = end($this->versionList);
         }
 
         /**
@@ -65,24 +65,31 @@
         public function unleash(){
             // Gets the URL version
             if(!empty($_GET['version'])){
-                self::$version = trim(strtolower($_GET['version']));
+                $this->version = trim(strtolower($_GET['version']));
             }else{
-                self::$version = self::$lastVersion;
+                $this->version = $this->lastVersion;
             }
 
             // Gets the URL route
             if(empty($_GET['route'])){
-                $file = 'docs/' . self::$version . '/home.md';
-                self::$route = 'home';
+                $file = 'docs/' . $this->version . '/home.md';
+                $this->route = 'home';
             }else{
                 $file = trim(strtolower($_GET['route']));
-                self::$route = $file;
-                $file = 'docs/' . self::$version . '/' . $file . '.md';
+                $this->route = $file;
+                $file = 'docs/' . $this->version . '/' . $file . '.md';
             }
 
             // Creates the parser
-            $parser = new Parsedown();
-            $parser->setBreaksEnabled(true);
+            if(APP_CONFIG['md_extra']){
+                $parser = new ParsedownExtra();
+            }else{
+                $parser = new Parsedown();
+            }
+
+            // Sets the parser options
+            $parser->setBreaksEnabled(APP_CONFIG['md_breaks']);
+            $parser->setUrlsLinked(APP_CONFIG['md_urls']);
 
             // Validate docs content
             if(!file_exists($file)){
@@ -90,7 +97,7 @@
                 return $this->view('404.phtml', [
                     'title' => 'Page not found | ' . APP_CONFIG['application'],
                     'theme' => APP_CONFIG['theme'],
-                    'base_url' => self::$baseUrl
+                    'base_url' => $this->baseUrl
                 ]);
             }
 
@@ -100,7 +107,7 @@
             $content = $parser->text($content);
 
             // Validates menu content
-            $menu_file = 'docs/' . self::$version . '/menu.md';
+            $menu_file = 'docs/' . $this->version . '/_menu.md';
             if(file_exists($menu_file)){
                 $menu = file_get_contents($menu_file);
             }else{
@@ -122,10 +129,10 @@
                 'theme' => APP_CONFIG['theme'],
                 'application' => APP_CONFIG['application'],
                 'git' => APP_CONFIG['git_edit'] ? (trim(APP_CONFIG['git_url'], '/') . '/' . $file) : '',
-                'base_url' => self::$baseUrl,
-                'version' => self::$version,
-                'version_list' => array_reverse(self::$versionList),
-                'last_version' => self::$lastVersion
+                'base_url' => $this->baseUrl,
+                'version' => $this->version,
+                'version_list' => array_reverse($this->versionList),
+                'last_version' => $this->lastVersion
             ]);
         }
 
@@ -148,16 +155,16 @@
          */
         private function doReplaces(string $content){
             // Replaces %%version%% tag
-            $content = preg_replace('/(?<!\\\)%%version%%/i', self::$version, $content);
-            
+            $content = preg_replace('/(?<!\\\)%%version%%/i', $this->version, $content);
+
             // Replaces %%latest%% tag
-            $content = preg_replace('/(?<!\\\)%%latest%%/i', self::$lastVersion, $content);
+            $content = preg_replace('/(?<!\\\)%%latest%%/i', $this->lastVersion, $content);
 
             // Replaces %%app%% tag
             $content = preg_replace('/(?<!\\\)%%app%%/i', APP_CONFIG['application'], $content);
 
             // Replaces %%route%% tag
-            $content = preg_replace('/(?<!\\\)%%route%%/i', self::$route, $content);
+            $content = preg_replace('/(?<!\\\)%%route%%/i', $this->route, $content);
 
             // Replaces tag ignores
             $content = preg_replace('/\\\%%(.+)%%/i', '%%$1%%', $content);
