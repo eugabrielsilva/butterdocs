@@ -16,7 +16,7 @@ We recommend using only letters and dashes on the filenames.
 There are two files inside each version folder that will be treated differently:
 
 - The `home.md` file will be the entry point of your documentation. This page will be displayed as the index/welcome page of the current version.
-- The `_menu.md` file will hold the sidenav menu content. This is were you can list your documentation topics.
+- The `_menu.md` file will hold the sidenav menu content. This is were you can list your documentation topics. If you do not provide a menu file and the `generate_menu` setting is enabled in the configuration, ButterDocs will generate a menu for the current version using the top-level folders as section headings.
 
 ### Example of folder structure
 ```plaintext

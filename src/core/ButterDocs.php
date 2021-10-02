@@ -111,7 +111,7 @@
             if(file_exists($menu_file)){
                 $menu = file_get_contents($menu_file);
             }else{
-                $menu = '';
+                $menu = $this->generateMenu();
             }
 
             // Gets menu content
@@ -134,6 +134,42 @@
                 'version_list' => array_reverse($this->versionList),
                 'last_version' => $this->lastVersion
             ]);
+        }
+
+        /**
+         * Generates the sidenav menu automatically.
+         * @return string Returns the menu markdown.
+         */
+        private function generateMenu(){
+            // Checks if the generate menu setting is enabled
+            if(!APP_CONFIG['generate_menu']) return '';
+
+            // Stores the markdown result
+            $result = '';
+
+            // Loops through the version folders
+            foreach(glob('docs/' . $this->version . '/*', GLOB_ONLYDIR) as $dir){
+                
+                // Gets the folder files
+                $files = glob($dir . '/*.md');
+                if(empty($files)) continue;
+
+                // Creates the heading
+                $name = str_replace('-', ' ', ucfirst(pathinfo($dir, PATHINFO_BASENAME)));
+                $result .= "\n" . '### ' . $name . "\n";
+
+                // Loops through the folder files
+                foreach($files as $file){
+                    
+                    // Adds the file
+                    $name = str_replace('-', ' ', ucfirst(pathinfo($file, PATHINFO_FILENAME)));
+                    $link = str_replace('.md', '', explode('/', $file, 2)[1]);
+                    $result .= '- [' . $name . '](' . $link. ")\n";
+                }
+            }
+
+            // Returns the result
+            return $result;
         }
 
         /**

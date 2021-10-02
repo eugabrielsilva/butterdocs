@@ -7,3 +7,4 @@
 
 ### Customization
 - [Themes](%%version%%/customization/themes)
+- [Assets](%%version%%/customization/assets)

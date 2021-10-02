@@ -4,10 +4,11 @@
 /* Theme colors */
 :root {
     --bg-color: #212121;
+    --menu-bg-color: #272727;
     --text-color: #ffffff;
     --primary-color: #bdbdbd;
     --secondary-color: #757575;
-    --code-block-color: #f8f8f8;
+    --code-block-color: #23241f;
     --menu-border-color: #424242;
     --header-bg-color: #424242;
     --header-text-color: #ffffff;

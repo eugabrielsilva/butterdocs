@@ -6,6 +6,9 @@ The options within this file are:
 `application`
 Your application title, basically the name that will be displayed in the documentation titles.
 
+`generate_menu`
+Enables the automatic sidenav menu generation, if the custom menu file for the current version is not provided.
+
 `theme`
 The theme used in your documentation. See [Themes](%%version%%/customization/themes).
 

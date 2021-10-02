@@ -88,6 +88,7 @@ section.edit i {
 
 section.menu {
     flex: 0 0 250px;
+    background-color: var(--menu-bg-color);
     border-right: 1px solid var(--menu-border-color);
     overflow-y: auto;
     padding: 30px 20px;

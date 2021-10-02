@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://glowie.tk" target="_blank"><img src="https://i.imgur.com/3SrqkTl.png" alt="Glowie" width="200"/></a>
+    <a href="https://github.com/eugabrielsilva/butterdocs" target="_blank"><img src="https://i.imgur.com/3SrqkTl.png" alt="ButterDocs" width="200"/></a>
 </p>
 
 <p align="center">
@@ -11,11 +11,13 @@
 ButterDocs is a lightweight documentation website generator written in PHP. Simply create your Markdown files and ButterDocs will do the rest for you, creating a beautiful and responsive website with your docs.
 
 ## Features
+- Fast and lightweight
 - No static HTML files
 - Support for multiple documentation versions
 - Syntax highlighting support
 - Theme customization
 - Automatic routing
+- Automatic menu generation
 - Responsive layout
 - Supports flavored Markdown and Markdown Extra
 - Supports direct editing on GitHub
