@@ -81,22 +81,22 @@
             }
 
             // Creates the parser
-            if(APP_CONFIG['md_extra']){
+            if(APP_CONFIG['md_extra'] ?? true){
                 $parser = new ParsedownExtra();
             }else{
                 $parser = new Parsedown();
             }
 
             // Sets the parser options
-            $parser->setBreaksEnabled(APP_CONFIG['md_breaks']);
-            $parser->setUrlsLinked(APP_CONFIG['md_urls']);
+            $parser->setBreaksEnabled(APP_CONFIG['md_breaks'] ?? true);
+            $parser->setUrlsLinked(APP_CONFIG['md_urls'] ?? true);
 
             // Validate docs content
             if(!file_exists($file)){
                 http_response_code(404);
                 return $this->view('404.phtml', [
-                    'title' => 'Page not found | ' . APP_CONFIG['application'],
-                    'theme' => APP_CONFIG['theme'],
+                    'title' => 'Page not found | ' . (APP_CONFIG['application'] ?? 'ButterDocs'),
+                    'theme' => APP_CONFIG['theme'] ?? 'light',
                     'base_url' => $this->baseUrl
                 ]);
             }
@@ -108,7 +108,7 @@
 
             // Validates menu content
             $menu_file = 'docs/' . $this->version . '/_menu.md';
-            if(file_exists($menu_file)){
+            if(is_file($menu_file)){
                 $menu = file_get_contents($menu_file);
             }else{
                 $menu = $this->generateMenu();
@@ -123,12 +123,12 @@
 
             // Includes the main view
             return $this->view('main.phtml', [
-                'title' => $title . ' | ' . APP_CONFIG['application'],
+                'title' => $title . ' | ' . (APP_CONFIG['application'] ?? 'ButterDocs'),
                 'menu' => $menu,
                 'content' => $content,
-                'theme' => APP_CONFIG['theme'],
-                'application' => APP_CONFIG['application'],
-                'git' => APP_CONFIG['git_edit'] ? (trim(APP_CONFIG['git_url'], '/') . '/' . $file) : '',
+                'theme' => APP_CONFIG['theme'] ?? 'light',
+                'application' => APP_CONFIG['application'] ?? 'ButterDocs',
+                'git' => (APP_CONFIG['git_edit'] ?? true) ? (trim(APP_CONFIG['git_url'] ?? '', '/') . '/' . $file) : '',
                 'base_url' => $this->baseUrl,
                 'version' => $this->version,
                 'version_list' => array_reverse($this->versionList),
@@ -142,14 +142,26 @@
          */
         private function generateMenu(){
             // Checks if the generate menu setting is enabled
-            if(!APP_CONFIG['generate_menu']) return '';
+            if(!(APP_CONFIG['generate_menu'] ?? true)) return '';
 
             // Stores the markdown result
             $result = '';
 
+            // Loops through standalone files
+            foreach(glob('docs/' . $this->version . '/*.md') as $file){
+
+                // Adds the file
+                $name = pathinfo($file, PATHINFO_FILENAME);
+                if($name == 'home') continue;
+                $name = str_replace('-', ' ', ucfirst($name));
+                $link = str_replace('.md', '', explode('/', $file, 3)[2]);
+                $result .= '- [' . $name . '](' . $link. ")\n";
+
+            }
+
             // Loops through the version folders
             foreach(glob('docs/' . $this->version . '/*', GLOB_ONLYDIR) as $dir){
-                
+
                 // Gets the folder files
                 $files = glob($dir . '/*.md');
                 if(empty($files)) continue;
@@ -160,10 +172,10 @@
 
                 // Loops through the folder files
                 foreach($files as $file){
-                    
+
                     // Adds the file
                     $name = str_replace('-', ' ', ucfirst(pathinfo($file, PATHINFO_FILENAME)));
-                    $link = str_replace('.md', '', explode('/', $file, 2)[1]);
+                    $link = str_replace('.md', '', explode('/', $file, 3)[2]);
                     $result .= '- [' . $name . '](' . $link. ")\n";
                 }
             }

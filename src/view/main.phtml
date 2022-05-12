@@ -2,9 +2,9 @@
 
 <head>
     <title><?= $title; ?></title>
-    <base href="<?= $base_url; ?>">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-    <link rel="shortcut icon" href="assets/images/favicon.png">
+    <base href="<?= $base_url . $version . '/'; ?>">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="../assets/images/favicon.png">
 
     <!-- CSS plugins -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">
 
     <!-- ButterDocs CSS -->
-    <link rel="stylesheet" href="assets/css/themes/<?= $theme; ?>.css">
-    <link rel="stylesheet" href="assets/css/butterdocs.css">
+    <link rel="stylesheet" href="../assets/css/themes/<?= $theme; ?>.css">
+    <link rel="stylesheet" href="../assets/css/butterdocs.css">
 </head>
 
 <body>
@@ -21,7 +21,7 @@
         <!-- Mobile header -->
         <section class="header">
             <a class="menu-button" onclick="toggleSidenav();"><i class="fas fa-bars"></i></a>
-            <a href="<?= $version; ?>">
+            <a href="../<?= $version; ?>">
                 <?= $application; ?>
             </a>
             <?php if (!empty($git)) : ?>
@@ -44,8 +44,8 @@
 
         <!-- Sidenav menu -->
         <section class="menu">
-            <a href="<?= $version; ?>">
-                <img src="assets/images/logo.png" class="logo">
+            <a href="../<?= $version; ?>">
+                <img src="../assets/images/logo.png" class="logo">
             </a>
             <div class="dropdown">
                 <a class="dropdown-toggle" data-bs-toggle="dropdown">
@@ -57,7 +57,7 @@
                 <ul class="dropdown-menu">
                     <?php foreach ($version_list as $v) : ?>
                         <li>
-                            <a href="<?= $v; ?>" class="dropdown-item" href="#">
+                            <a href="../<?= $v; ?>" class="dropdown-item" href="#">
                                 <?= $v; ?>
                                 <?php if ($v == $last_version) : ?>
                                     <span>(latest)</span>
@@ -87,7 +87,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script>
 
     <!-- ButterDocs JS -->
-    <script src="assets/js/butterdocs.js"></script>
+    <script src="../assets/js/butterdocs.js"></script>
 </body>
 
 </html>

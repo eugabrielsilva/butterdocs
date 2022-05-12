@@ -1,5 +1,5 @@
 # Configuration
-Your documentation configuration can be found at `index.php` file.
+Your documentation configuration can be found at the root `config.php` file.
 
 The options within this file are:
 
@@ -10,7 +10,7 @@ Your application title, basically the name that will be displayed in the documen
 Enables the automatic sidenav menu generation, if the custom menu file for the current version is not provided.
 
 `theme`
-The theme used in your documentation. See [Themes](%%version%%/customization/themes).
+The theme used in your documentation. See [Themes](customization/themes).
 
 `git_edit`
 Enables the "Edit this page on GitHub" button.

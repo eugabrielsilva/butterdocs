@@ -1,10 +1,10 @@
 ### Getting started
-- [Requirements](%%version%%/getting-started/requirements)
-- [Installation](%%version%%/getting-started/installation)
-- [Configuration](%%version%%/getting-started/configuration)
-- [Butter basics](%%version%%/getting-started/butter-basics)
-- [Dynamic tags](%%version%%/getting-started/dynamic-tags)
+- [Requirements](getting-started/requirements)
+- [Installation](getting-started/installation)
+- [Configuration](getting-started/configuration)
+- [Butter basics](getting-started/butter-basics)
+- [Dynamic tags](getting-started/dynamic-tags)
 
 ### Customization
-- [Themes](%%version%%/customization/themes)
-- [Assets](%%version%%/customization/assets)
+- [Themes](customization/themes)
+- [Assets](customization/assets)

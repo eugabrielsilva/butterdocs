@@ -5,6 +5,6 @@
 That's all! Simple, isn't it?
 
 ### Setup your docs
-You'll probably want to [configure](%%version%%/getting-started/configuration) your docs before getting started.
+You'll probably want to [configure](getting-started/configuration) your docs before getting started.
 
-If you want to skip this step and jump straight into writing your docs, [be happy](%%version%%/getting-started/butter-basics).
+If you want to skip this step and jump straight into writing your docs, [be happy](getting-started/butter-basics).

@@ -141,6 +141,7 @@ section.content {
     padding: 50px 80px;
     overflow-y: auto;
     flex: 0 1 100%;
+    transition: 0.3s all;
 }
 
 section.content:hover::-webkit-scrollbar-thumb {
@@ -245,7 +246,7 @@ section.not-found {
 
 section.not-found h1 {
     color: var(--primary-color);
-    font-size: 5em;
+    font-size: 10em;
     font-weight: 300;
 }
 
@@ -269,7 +270,7 @@ section.not-found a i {
     margin-right: 7px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
     body {
         font-size: 14px;
     }
@@ -279,13 +280,18 @@ section.not-found a i {
     }
 
     section.menu {
-        margin-left: -250px;
+        position: fixed;
+        z-index: 1;
+        left: -100%;
+        top: 0;
+        width: 100%;
+        height: 100%;
         padding: 10px 20px;
         padding-top: 67px;
     }
 
     section.menu.show {
-        margin-left: 0;
+        left: 0;
     }
 
     section.menu .logo {
@@ -299,10 +305,15 @@ section.not-found a i {
 
     section.header {
         display: block;
+        z-index: 2;
     }
 
     section.not-found {
         font-size: 13px;
+    }
+
+    section.not-found h1 {
+        font-size: 7em;
     }
 
     section.not-found a {
