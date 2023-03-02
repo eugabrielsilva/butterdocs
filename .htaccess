@@ -6,5 +6,5 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^.*$ - [L]
-RewriteRule ^([a-z0-9\-.]*)/(.*)$ index.php?version=$1&route=$2 [L,NC]
-RewriteRule ^([a-z0-9\-.]*)$ index.php?version=$1 [L,NC]
+RewriteRule ^([a-z0-9\-.]*)/(.*)$ index.php?version=$1&route=$2 [L,NC,QSA]
+RewriteRule ^([a-z0-9\-.]*)$ index.php?version=$1 [L,NC,QSA]

@@ -30,26 +30,13 @@
             <?php endif; ?>
         </section>
 
-        <!-- Edit on GitHub button -->
-        <?php if (!empty($git)) : ?>
-            <section class="edit">
-                <a href="<?= $git; ?>" target="_blank">
-                    <i class="fas fa-pencil-alt"></i>
-                    <span>
-                        Edit this page<br>
-                        <strong>on GitHub</strong>
-                    </span>
-                </a>
-            </section>
-        <?php endif; ?>
-
         <!-- Sidenav menu -->
         <section class="menu">
             <a href="../<?= $version; ?>">
                 <img src="../assets/images/logo.png" class="logo">
             </a>
             <form action="search" class="search-bar">
-                <input type="search" name="q" required placeholder="Search...">
+                <input value="<?= htmlspecialchars($search); ?>" type="search" name="q" required placeholder="Search...">
             </form>
             <div class="dropdown">
                 <a class="dropdown-toggle" data-bs-toggle="dropdown">
@@ -76,11 +63,30 @@
 
         <!-- Content -->
         <section class="content">
-            <?= $content; ?>
+            <h1>Search Results</h1>
+            <h6>Searching for: <?= htmlspecialchars($search); ?></h6>
+
+            <!-- Search results -->
+            <?php foreach ($results as $item) : ?>
+                <div class="item">
+                    <h5><a href="<?= $item['url']; ?>"><?= $item['title']; ?></a></h5>
+                    <?php foreach ($item['results'] as $result) : ?>
+                        <div class="line"><?= $result; ?></div>
+                    <?php endforeach; ?>
+                </div>
+                <hr>
+            <?php endforeach; ?>
+
+            <!-- Empty message -->
+            <?php if (empty($results)) : ?>
+                No results found.
+            <?php endif; ?>
 
             <!-- Copyright -->
             <section class="copyright">
-                <hr>
+                <?php if (empty($results)) : ?>
+                    <hr>
+                <?php endif; ?>
                 Powered by <a href="https://github.com/eugabrielsilva/butterdocs" target="_blank">ButterDocs</a>
             </section>
         </section>

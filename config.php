@@ -14,9 +14,6 @@
         // Generate menu automatically if not provided
         'generate_menu' => true,
 
-        // Theme to use (must be a valid theme from "assets/css/themes" folder)
-        'theme' => 'light',
-
         // Show "Edit this page on GitHub" button
         'git_edit' => true,
 

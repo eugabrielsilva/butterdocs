@@ -137,6 +137,23 @@ section.menu a {
     font-weight: 500;
 }
 
+section.menu .search-bar input {
+    width: 100%;
+    border-radius: 4px;
+    max-width: 300px;
+    outline: none;
+    background-color: var(--bg-color);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 5px 15px;
+    font-size: 13px;
+    margin-top: 20px;
+}
+
+section.menu .dropdown-menu {
+    background-color: var(--bg-color);
+}
+
 section.content {
     padding: 50px 80px;
     overflow-y: auto;

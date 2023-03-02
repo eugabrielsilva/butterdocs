@@ -14,10 +14,11 @@ ButterDocs is a lightweight documentation website generator written in PHP. Simp
 - Fast and lightweight
 - No static HTML files
 - Support for multiple documentation versions
+- Theme customization with automatic light/dark mode
 - Syntax highlighting support
-- Theme customization
 - Automatic routing
 - Automatic menu generation
+- Support for search in files
 - Responsive layout
 - Supports flavored Markdown and Markdown Extra
 - Supports direct editing on GitHub

@@ -1,5 +1,5 @@
 /* Syntax highlighter theme (from https://highlightjs.org) */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/monokai-sublime.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/github-dark.min.css');
 
 /* Theme colors */
 :root {

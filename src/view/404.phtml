@@ -3,15 +3,17 @@
 <head>
     <title><?= $title; ?></title>
     <base href="<?= $base_url; ?>">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="shortcut icon" href="assets/images/favicon.png">
 
     <!-- CSS plugins -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">
 
     <!-- ButterDocs CSS -->
-    <link rel="stylesheet" href="assets/css/themes/<?= $theme; ?>.css">
+    <link rel="stylesheet" href="assets/css/themes/light.css" id="theme-light">
+    <link rel="stylesheet" href="assets/css/themes/dark.css" id="theme-dark" disabled>
     <link rel="stylesheet" href="assets/css/butterdocs.css">
 </head>
 
@@ -26,6 +28,13 @@
             </a>
         </section>
     </section>
+
+    <!-- JS plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script>
+
+    <!-- ButterDocs JS -->
+    <script src="assets/js/butterdocs.js"></script>
 </body>
 
 </html>

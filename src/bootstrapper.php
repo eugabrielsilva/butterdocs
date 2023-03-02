@@ -7,4 +7,8 @@
     // Include ButterDocs core
     require_once('core/ButterDocs.php');
 
+    // Unleash ButterDocs!
+    $app = new ButterDocs();
+    $app->unleash();
+
 ?>

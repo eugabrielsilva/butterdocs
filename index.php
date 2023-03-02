@@ -7,14 +7,7 @@
         --------------------------
     */
 
-    // Load the settings
-    define('APP_CONFIG', require_once('config.php'));
-
     // Load the bootstrapper
     require_once('src/bootstrapper.php');
-
-    // Unleash ButterDocs!
-    $app = new ButterDocs();
-    $app->unleash();
 
 ?>
