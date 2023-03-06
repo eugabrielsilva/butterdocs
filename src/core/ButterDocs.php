@@ -60,9 +60,8 @@
             $this->baseUrl = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . '/' . $folder . (!empty($folder) ? '/' : '');
 
             // Gets the version list
-            foreach(glob('docs/*', GLOB_ONLYDIR) as $dir){
-                $this->versionList[] = preg_replace('/docs\//', '', $dir, 1);
-            }
+            $versions = glob('docs/*', GLOB_ONLYDIR)?? [];
+            foreach($versions as $dir) $this->versionList[] = preg_replace('~^docs\/~', '', $dir, 1);
 
             // Gets the last version
             $this->lastVersion = end($this->versionList);
@@ -113,29 +112,15 @@
             }
 
             // Gets docs content
-            $content = file_get_contents($file);
+            $content = @file_get_contents($file) ?? '';
             $title = trim(str_replace('#', '', strtok($content, "\n")));
             $content = $this->parser->text($content);
-
-            // Validates menu content
-            $menu_file = 'docs/' . $this->version . '/_menu.md';
-            if(is_file($menu_file)){
-                $menu = file_get_contents($menu_file);
-            }else{
-                $menu = $this->generateMenu();
-            }
-
-            // Gets menu content
-            $menu = $this->parser->text($menu);
-
-            // Replaces content
             $content = $this->doReplaces($content);
-            $menu = $this->doReplaces($menu);
 
             // Includes the main view
             return $this->view('main.phtml', [
                 'title' => $title . ' | ' . (APP_CONFIG['application'] ?? 'ButterDocs'),
-                'menu' => $menu,
+                'menu' => $this->getMenu(),
                 'content' => $content,
                 'application' => APP_CONFIG['application'] ?? 'ButterDocs',
                 'git' => (APP_CONFIG['git_edit'] ?? true) ? (trim(APP_CONFIG['git_url'] ?? '', '/') . '/' . $file) : '',
@@ -177,7 +162,7 @@
             // Parse each matched file
             foreach($matches as $key => $file){
                 // Get title
-                $content = file_get_contents($key);
+                $content = @file_get_contents($key) ?? '';
                 $title = trim(str_replace('#', '', strtok($content, "\n")));
 
                 // Parse content
@@ -197,22 +182,10 @@
                 ];
             }
 
-            // Validates menu content
-            $menu_file = 'docs/' . $this->version . '/_menu.md';
-            if(is_file($menu_file)){
-                $menu = file_get_contents($menu_file);
-            }else{
-                $menu = $this->generateMenu();
-            }
-
-            // Gets menu content
-            $menu = $this->parser->text($menu);
-            $menu = $this->doReplaces($menu);
-
             // Includes the search view
             return $this->view('search.phtml', [
                 'title' => 'Search Results | ' . (APP_CONFIG['application'] ?? 'ButterDocs'),
-                'menu' => $menu,
+                'menu' => $this->getMenu(),
                 'results' => $matches,
                 'search' => $query,
                 'application' => APP_CONFIG['application'] ?? 'ButterDocs',
@@ -221,6 +194,25 @@
                 'version_list' => array_reverse($this->versionList),
                 'last_version' => $this->lastVersion
             ]);
+        }
+
+        /**
+         * Gets the menu content.
+         * @return string Menu markdown.
+         */
+        private function getMenu(){
+            // Validates menu content
+            $menu_file = 'docs/' . $this->version . '/_menu.md';
+            if(is_file($menu_file)){
+                $menu = @file_get_contents($menu_file) ?? '';
+            }else{
+                $menu = $this->generateMenu();
+            }
+
+            // Gets menu content
+            $menu = $this->parser->text($menu);
+            $menu = $this->doReplaces($menu);
+            return $menu;
         }
 
         /**
@@ -312,11 +304,12 @@
          * @return array|bool Returns the files as an array, false on errors.
          */
         private function globRecursive(string $pattern){
-            $files = glob($pattern);
-            foreach (glob(dirname($pattern) . '/*', GLOB_ONLYDIR) as $dir) {
-                $files = array_merge($files, $this->globRecursive($dir . '/' . basename($pattern)));
-            }
+            $files = glob($pattern) ?? [];
+            $folders = glob(dirname($pattern) . '/*', GLOB_ONLYDIR) ?? [];
+            foreach ($folders as $dir) $files = array_merge($files, $this->globRecursive($dir . '/' . basename($pattern)));
             return $files;
         }
 
     }
+
+?>
