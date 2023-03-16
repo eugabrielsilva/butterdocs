@@ -52,26 +52,19 @@
          * Creates a new ButterDocs application.
          */
         public function __construct(){
-            // Load the settings
-            define('APP_CONFIG', require_once('config.php'));
-
             // Sets the base URL
             $folder = trim(mb_substr($_SERVER['PHP_SELF'], 0, mb_strpos($_SERVER['PHP_SELF'], '/index.php')), '/');
             $this->baseUrl = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . '/' . $folder . (!empty($folder) ? '/' : '');
 
             // Gets the version list
-            $versions = glob('docs/*', GLOB_ONLYDIR)?? [];
+            $versions = glob('docs/*', GLOB_ONLYDIR) ?? [];
             foreach($versions as $dir) $this->versionList[] = preg_replace('~^docs\/~', '', $dir, 1);
 
             // Gets the last version
             $this->lastVersion = end($this->versionList);
 
             // Creates the parser
-            if(APP_CONFIG['md_extra'] ?? true){
-                $this->parser = new ParsedownExtra();
-            }else{
-                $this->parser = new Parsedown();
-            }
+            $this->parser = new ParsedownExtended();
 
             // Sets the parser options
             $this->parser->setBreaksEnabled(APP_CONFIG['md_breaks'] ?? true);
@@ -93,7 +86,7 @@
             if(empty($_GET['route'])){
                 $file = 'docs/' . $this->version . '/home.md';
                 $this->route = 'home';
-            }else if($_GET['route'] == 'search'){
+            }else if($_GET['route'] == 'search' && (APP_CONFIG['search'] ?? true)){
                 $this->route = 'search';
                 return $this->search();
             }else{
@@ -106,7 +99,7 @@
             if(!file_exists($file)){
                 http_response_code(404);
                 return $this->view('404.phtml', [
-                    'title' => 'Page not found | ' . (APP_CONFIG['application'] ?? 'ButterDocs'),
+                    'title' => (APP_CONFIG['language']['not_found'] ?? 'Page not found') . ' | ' . (APP_CONFIG['application'] ?? 'ButterDocs'),
                     'base_url' => $this->baseUrl
                 ]);
             }
@@ -136,7 +129,7 @@
          */
         private function search(){
             // Get search query
-            $query = $_GET['q'] ?? '';
+            $query = trim($_GET['q'] ?? '');
             if(empty($query)) return header('Location: ' . $this->baseUrl . $this->version);
 
             // Loop through each docs files
@@ -184,7 +177,7 @@
 
             // Includes the search view
             return $this->view('search.phtml', [
-                'title' => 'Search Results | ' . (APP_CONFIG['application'] ?? 'ButterDocs'),
+                'title' => (APP_CONFIG['language']['search_results'] ?? 'Search Results') . ' | ' . (APP_CONFIG['application'] ?? 'ButterDocs'),
                 'menu' => $this->getMenu(),
                 'results' => $matches,
                 'search' => $query,

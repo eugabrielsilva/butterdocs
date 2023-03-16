@@ -35,14 +35,16 @@
             <a href="../<?= $version; ?>">
                 <img src="../assets/images/logo.png" class="logo">
             </a>
-            <form action="search" class="search-bar">
-                <input value="<?= htmlspecialchars($search); ?>" type="search" name="q" required placeholder="Search...">
-            </form>
+            <?php if (APP_CONFIG['search'] ?? true) : ?>
+                <form action="search" class="search-bar">
+                    <input value="<?= htmlspecialchars($search); ?>" type="search" name="q" required placeholder="<?= APP_CONFIG['language']['search'] ?? 'Search...'; ?>">
+                </form>
+            <?php endif; ?>
             <div class="dropdown">
                 <a class="dropdown-toggle" data-bs-toggle="dropdown">
                     <?= $version; ?>
                     <?php if ($version == $last_version) : ?>
-                        <span>(latest)</span>
+                        <span><?= APP_CONFIG['language']['latest'] ?? '(latest)'; ?></span>
                     <?php endif; ?>
                 </a>
                 <ul class="dropdown-menu">
@@ -51,7 +53,7 @@
                             <a href="../<?= $v; ?>" class="dropdown-item" href="#">
                                 <?= $v; ?>
                                 <?php if ($v == $last_version) : ?>
-                                    <span>(latest)</span>
+                                    <span><?= APP_CONFIG['language']['latest'] ?? '(latest)'; ?></span>
                                 <?php endif; ?>
                             </a>
                         </li>
@@ -63,15 +65,15 @@
 
         <!-- Content -->
         <section class="content">
-            <h1>Search Results</h1>
-            <h6>Searching for: <?= htmlspecialchars($search); ?></h6>
+            <h1><?= APP_CONFIG['language']['search_results'] ?? 'Search Results'; ?></h1>
+            <h6><?= APP_CONFIG['language']['searching_for'] ?? 'Searching for:'; ?> <?= htmlspecialchars($search); ?></h6>
 
             <!-- Search results -->
             <?php foreach ($results as $item) : ?>
                 <div class="item">
                     <h5><a href="<?= $item['url']; ?>"><?= $item['title']; ?></a></h5>
                     <?php foreach ($item['results'] as $result) : ?>
-                        <div class="line"><?= $result; ?></div>
+                        <p><?= strip_tags($result); ?></p>
                     <?php endforeach; ?>
                 </div>
                 <hr>
@@ -79,7 +81,7 @@
 
             <!-- Empty message -->
             <?php if (empty($results)) : ?>
-                No results found.
+                <?= APP_CONFIG['language']['no_results'] ?? 'No results found.'; ?>
             <?php endif; ?>
 
             <!-- Copyright -->

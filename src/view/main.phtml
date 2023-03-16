@@ -36,8 +36,8 @@
                 <a href="<?= $git; ?>" target="_blank">
                     <i class="fas fa-pencil-alt"></i>
                     <span>
-                        Edit this page<br>
-                        <strong>on GitHub</strong>
+                        <?= APP_CONFIG['language']['edit_page'] ?? 'Edit this page'; ?><br>
+                        <strong><?= APP_CONFIG['language']['github'] ?? 'on GitHub'; ?></strong>
                     </span>
                 </a>
             </section>
@@ -48,14 +48,16 @@
             <a href="../<?= $version; ?>">
                 <img src="../assets/images/logo.png" class="logo">
             </a>
-            <form action="search" class="search-bar">
-                <input type="search" name="q" required placeholder="Search...">
-            </form>
+            <?php if (APP_CONFIG['search'] ?? true) : ?>
+                <form action="search" class="search-bar">
+                    <input type="search" name="q" required placeholder="Search...">
+                </form>
+            <?php endif; ?>
             <div class="dropdown">
                 <a class="dropdown-toggle" data-bs-toggle="dropdown">
                     <?= $version; ?>
                     <?php if ($version == $last_version) : ?>
-                        <span>(latest)</span>
+                        <span><?= APP_CONFIG['language']['latest'] ?? '(latest)'; ?></span>
                     <?php endif; ?>
                 </a>
                 <ul class="dropdown-menu">
@@ -64,7 +66,7 @@
                             <a href="../<?= $v; ?>" class="dropdown-item" href="#">
                                 <?= $v; ?>
                                 <?php if ($v == $last_version) : ?>
-                                    <span>(latest)</span>
+                                    <span><?= APP_CONFIG['language']['latest'] ?? '(latest)'; ?></span>
                                 <?php endif; ?>
                             </a>
                         </li>
