@@ -36,8 +36,8 @@
                 <a href="<?= $git; ?>" target="_blank">
                     <i class="fas fa-pencil-alt"></i>
                     <span>
-                        <?= APP_CONFIG['language']['edit_page'] ?? 'Edit this page'; ?><br>
-                        <strong><?= APP_CONFIG['language']['github'] ?? 'on GitHub'; ?></strong>
+                        <?= get_lang('edit_page', 'Edit this page'); ?><br>
+                        <strong><?= get_lang('github', 'on GitHub'); ?></strong>
                     </span>
                 </a>
             </section>
@@ -47,8 +47,9 @@
         <section class="menu">
             <a href="../<?= $version; ?>">
                 <img src="../assets/images/logo.png" class="logo">
+                <img src="../assets/images/logo-dark.png" class="logo-dark">
             </a>
-            <?php if (APP_CONFIG['search'] ?? true) : ?>
+            <?php if (get_config('search', true)) : ?>
                 <form action="search" class="search-bar">
                     <input type="search" name="q" required placeholder="Search...">
                 </form>
@@ -57,16 +58,16 @@
                 <a class="dropdown-toggle" data-bs-toggle="dropdown">
                     <?= $version; ?>
                     <?php if ($version == $last_version) : ?>
-                        <span><?= APP_CONFIG['language']['latest'] ?? '(latest)'; ?></span>
+                        <span><?= get_lang('latest', '(latest)'); ?></span>
                     <?php endif; ?>
                 </a>
                 <ul class="dropdown-menu">
                     <?php foreach ($version_list as $v) : ?>
                         <li>
-                            <a href="../<?= $v; ?>" class="dropdown-item" href="#">
+                            <a href="../<?= $v; ?>" class="dropdown-item">
                                 <?= $v; ?>
                                 <?php if ($v == $last_version) : ?>
-                                    <span><?= APP_CONFIG['language']['latest'] ?? '(latest)'; ?></span>
+                                    <span><?= get_lang('latest', '(latest)'); ?></span>
                                 <?php endif; ?>
                             </a>
                         </li>

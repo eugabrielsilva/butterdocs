@@ -34,26 +34,27 @@
         <section class="menu">
             <a href="../<?= $version; ?>">
                 <img src="../assets/images/logo.png" class="logo">
+                <img src="../assets/images/logo-dark.png" class="logo-dark">
             </a>
-            <?php if (APP_CONFIG['search'] ?? true) : ?>
+            <?php if (get_config('search', true)) : ?>
                 <form action="search" class="search-bar">
-                    <input value="<?= htmlspecialchars($search); ?>" type="search" name="q" required placeholder="<?= APP_CONFIG['language']['search'] ?? 'Search...'; ?>">
+                    <input value="<?= htmlspecialchars($search); ?>" type="search" name="q" required placeholder="<?= get_lang('search', 'Search...'); ?>">
                 </form>
             <?php endif; ?>
             <div class="dropdown">
                 <a class="dropdown-toggle" data-bs-toggle="dropdown">
                     <?= $version; ?>
                     <?php if ($version == $last_version) : ?>
-                        <span><?= APP_CONFIG['language']['latest'] ?? '(latest)'; ?></span>
+                        <span><?= get_lang('latest', '(latest)'); ?></span>
                     <?php endif; ?>
                 </a>
                 <ul class="dropdown-menu">
                     <?php foreach ($version_list as $v) : ?>
                         <li>
-                            <a href="../<?= $v; ?>" class="dropdown-item" href="#">
+                            <a href="../<?= $v; ?>" class="dropdown-item">
                                 <?= $v; ?>
                                 <?php if ($v == $last_version) : ?>
-                                    <span><?= APP_CONFIG['language']['latest'] ?? '(latest)'; ?></span>
+                                    <span><?= get_lang('latest', '(latest)'); ?></span>
                                 <?php endif; ?>
                             </a>
                         </li>
@@ -65,8 +66,8 @@
 
         <!-- Content -->
         <section class="content">
-            <h1><?= APP_CONFIG['language']['search_results'] ?? 'Search Results'; ?></h1>
-            <h6><?= APP_CONFIG['language']['searching_for'] ?? 'Searching for:'; ?> <?= htmlspecialchars($search); ?></h6>
+            <h1><?= get_lang('search_results', 'Search Results'); ?></h1>
+            <h6><?= get_lang('searching_for', 'Searching for:'); ?> <?= htmlspecialchars($search); ?></h6>
 
             <!-- Search results -->
             <?php foreach ($results as $item) : ?>
@@ -81,7 +82,7 @@
 
             <!-- Empty message -->
             <?php if (empty($results)) : ?>
-                <?= APP_CONFIG['language']['no_results'] ?? 'No results found.'; ?>
+                <?= get_lang('no_results', 'No results found.'); ?>
             <?php endif; ?>
 
             <!-- Copyright -->

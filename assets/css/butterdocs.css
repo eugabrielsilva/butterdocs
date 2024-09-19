@@ -61,13 +61,8 @@ section.header .menu-edit {
 
 section.edit {
     position: fixed;
-    right: -110px;
-    top: 30px;
-    transition: 0.4s all;
-}
-
-section.edit:hover {
     right: 0;
+    top: 30px;
 }
 
 section.edit a {
@@ -100,12 +95,33 @@ section.menu:hover::-webkit-scrollbar-thumb {
     background: var(--secondary-color);
 }
 
-section.menu .logo {
+section.menu .logo,
+section.menu .logo-dark {
     height: 45px;
     max-width: 100%;
     object-fit: contain;
     margin: auto;
     display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+    section.menu .logo {
+        display: none;
+    }
+
+    section.menu .logo-dark {
+        display: block;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    section.menu .logo {
+        display: block;
+    }
+
+    section.menu .logo-dark {
+        display: none;
+    }
 }
 
 section.menu .dropdown {
@@ -301,7 +317,7 @@ section.not-found a i {
         z-index: 1;
         left: -100%;
         top: 0;
-        width: 100%;
+        width: 90%;
         height: 100%;
         padding: 10px 20px;
         padding-top: 67px;
@@ -311,7 +327,8 @@ section.not-found a i {
         left: 0;
     }
 
-    section.menu .logo {
+    section.menu .logo,
+    section.menu .logo-dark {
         display: none;
     }
 
