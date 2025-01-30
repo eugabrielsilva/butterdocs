@@ -2,14 +2,13 @@
 
 /**
  * Gets a configuration variable.
- * @var string $key Configuration key to get.
+ * @param string $key Configuration key to get.
  * @param mixed $default (Optional) Default value to return if not found.
  * @return mixed Returns the configuration variable or the default value if not found.
  */
 function get_config(string $key, $default = null)
 {
-    if (!defined('APP_CONFIG')) return $default;
-    return APP_CONFIG[$key] ?? $default;
+    return ButterDocs::getConfig($key, $default);
 }
 
 /**

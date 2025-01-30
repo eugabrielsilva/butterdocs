@@ -1,15 +1,24 @@
 <?php
 
 /*
-    ------------------------
-    Documentation settings
-    ------------------------
+    ----------------------------------------------------------
+    Global documentation settings
+    ----------------------------------------------------------
+    These settings are used as a fallback if no config file
+    is provided for a specific version folder.
+    ----------------------------------------------------------
 */
 
 return [
 
     // Application title
     'application' => 'ButterDocs',
+
+    // Documentation starting point file
+    'start_point' => 'README',
+
+    // Documentation menu file
+    'menu_file' => '_menu',
 
     // Generate menu automatically if not provided
     'generate_menu' => true,

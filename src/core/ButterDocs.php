@@ -50,10 +50,26 @@ class ButterDocs
     private $route;
 
     /**
-     * Creates a new ButterDocs application.
+     * Application configuration.
+     * @var array
      */
-    public function __construct()
+    private static $appConfig = [];
+
+    /**
+     * Current version configuration.
+     * @var array
+     */
+    private static $versionConfig = [];
+
+    /**
+     * Creates a new ButterDocs application.
+     * @param array $appConfig App configuration.
+     */
+    public function __construct(array $appConfig)
     {
+        // Saves the app config
+        self::$appConfig = $appConfig;
+
         // Sets the base URL
         $folder = trim(mb_substr($_SERVER['PHP_SELF'], 0, mb_strpos($_SERVER['PHP_SELF'], '/index.php')), '/');
         $this->baseUrl = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . '/' . $folder . (!empty($folder) ? '/' : '');
@@ -78,17 +94,22 @@ class ButterDocs
      */
     public function unleash()
     {
-        // Gets the URL version
+        // Gets the version from the URL
         if (!empty($_GET['version'])) {
             $this->version = trim(mb_strtolower($_GET['version']));
         } else {
             $this->version = $this->lastVersion;
         }
 
+        // Gets the version configuration file, if exists
+        $config = 'docs/' . $this->version . '/config.php';
+        if (file_exists($config)) self::$versionConfig = require_once($config);
+
         // Gets the URL route
         if (empty($_GET['route'])) {
-            $file = 'docs/' . $this->version . '/README.md';
-            $this->route = 'README';
+            $startPoint = get_config('start_point', 'README');
+            $file = 'docs/' . $this->version . '/' . $startPoint . '.md';
+            $this->route = pathinfo($startPoint, PATHINFO_FILENAME);
         } else if ($_GET['route'] == 'search' && (get_config('search', true))) {
             $this->route = 'search';
             return $this->search();
@@ -142,8 +163,10 @@ class ButterDocs
         // Loop through each docs files
         $matches = [];
         foreach ($this->globRecursive('docs/' . $this->version . '/*.md') as $file) {
-            // Ignore menu and README files
-            if ($file == 'docs/' . $this->version . '/_menu.md' || $file == 'docs/' . $this->version . '/README.md') continue;
+            // Ignore menu and starting point files
+            $startPointFile = 'docs/' . $this->version . '/' . get_config('start_point', 'README') . '.md';
+            $menuFile = $file == 'docs/' . $this->version . '/' . get_config('menu_file', '_menu') . '.md';
+            if ($file == $startPointFile || $file == $menuFile) continue;
 
             // Open file stream
             $handle = fopen($file, 'r');
@@ -203,7 +226,7 @@ class ButterDocs
     private function getMenu()
     {
         // Validates menu content
-        $menu_file = 'docs/' . $this->version . '/_menu.md';
+        $menu_file = 'docs/' . $this->version . '/' . get_config('menu_file', '_menu') . '.md';
         if (is_file($menu_file)) {
             $menu = @file_get_contents($menu_file) ?? '';
         } else {
@@ -315,8 +338,16 @@ class ButterDocs
         return $files;
     }
 
-    private static function getConfig($key, $default)
+    /**
+     * Gets a configuration variable.
+     * @param string $key Configuration key to get.
+     * @param mixed $default (Optional) Default value to return if not found.
+     * @return mixed Returns the configuration variable or the default value if not found.
+     */
+    public static function getConfig(string $key, $default = null)
     {
-        //
+        if (isset(self::$versionConfig[$key])) return self::$versionConfig[$key];
+        if (isset(self::$appConfig[$key])) return self::$appConfig[$key];
+        return $default;
     }
 }
