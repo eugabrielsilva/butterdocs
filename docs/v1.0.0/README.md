@@ -10,4 +10,4 @@ For reporting bugs, asking for new features and collaborating with ButterDocs de
 Let's begin!
 
 ### Credits
-ButterDocs is proudly developed by [Gabriel Silva](https://eugabrielsilva.tk), with dependencies provided by [Parsedown](https://parsedown.org), [highlight.js](https://highlightjs.org), [Bootstrap](https://getbootstrap.com) and [Font Awesome](https://fontawesome.com).
+ButterDocs is proudly developed by [Gabriel Silva](https://gabrielsilva.dev.br), with dependencies provided by [Parsedown](https://parsedown.org), [highlight.js](https://highlightjs.org), [Bootstrap](https://getbootstrap.com) and [Font Awesome](https://fontawesome.com).

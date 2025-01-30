@@ -4,7 +4,7 @@
     <title><?= $title; ?></title>
     <base href="<?= $base_url . $version . '/'; ?>">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="shortcut icon" href="../assets/images/favicon.png">
+    <link rel="shortcut icon" href="<?= get_config('favicon_file', '../assets/images/favicon.png') ?>">
 
     <!-- CSS plugins -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -33,8 +33,8 @@
         <!-- Sidenav menu -->
         <section class="menu">
             <a href="../<?= $version; ?>">
-                <img src="../assets/images/logo.png" class="logo">
-                <img src="../assets/images/logo-dark.png" class="logo-dark">
+                <img src="<?= get_config('logo_file', '../assets/images/logo-dark.png'); ?>" class="logo">
+                <img src="<?= get_config('dark_logo_file', '../assets/images/logo-dark.png'); ?>" class="logo-dark">
             </a>
             <?php if (get_config('search', true)) : ?>
                 <form action="search" class="search-bar">

@@ -36,5 +36,15 @@ return [
     'md_urls' => true,
 
     // Enable search in content
-    'search' => true
+    'search' => true,
+
+    // Logo location
+    'logo_file' => '../assets/images/logo.png',
+
+    // Dark mode logo location
+    'dark_logo_file' => '../assets/images/logo-dark.png',
+
+    // Favicon image location
+    'favicon_file' => '../assets/images/favicon.png'
+
 ];
