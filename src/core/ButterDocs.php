@@ -95,26 +95,34 @@ class ButterDocs
     public function unleash()
     {
         // Gets the version from the URL
-        if (!empty($_GET['version'])) {
-            $this->version = trim(mb_strtolower($_GET['version']));
-        } else {
+        $version = trim(mb_strtolower($_GET['version'] ?? ''));
+
+        if (empty($version) || $version === 'latest') {
             $this->version = $this->lastVersion;
+        } else {
+            $this->version = $version;
         }
 
         // Gets the version configuration file, if exists
         $config = 'docs/' . $this->version . '/config.php';
-        if (file_exists($config)) self::$versionConfig = require_once($config);
+
+        if (file_exists($config)) {
+            self::$versionConfig = require_once($config);
+        }
 
         // Gets the URL route
-        if (empty($_GET['route'])) {
-            $startPoint = get_config('start_point', 'README');
+        $route = trim(mb_strtolower($_GET['route'] ?? ''));
+
+        if (empty($route)) {
+            $startPoint = rtrim(get_config('start_point', 'README'), '.md');
             $file = 'docs/' . $this->version . '/' . $startPoint . '.md';
             $this->route = pathinfo($startPoint, PATHINFO_FILENAME);
-        } else if ($_GET['route'] == 'search' && (get_config('search', true))) {
+        } else if ($route === 'search' && get_config('search', true)) {
             $this->route = 'search';
             return $this->search();
         } else {
-            $file = trim(mb_strtolower($_GET['route']));
+            $file = rtrim($route, '/');
+            $file = rtrim($file, '.md');
             $this->route = $file;
             $file = 'docs/' . $this->version . '/' . $file . '.md';
         }

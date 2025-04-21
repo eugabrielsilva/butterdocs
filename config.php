@@ -27,7 +27,7 @@ return [
     'git_edit' => true,
 
     // GitHub edit URL (including branch)
-    'git_url' => 'https://github.com/eugabrielsilva/butterdocs/edit/master',
+    'git_url' => 'https://github.com/eugabrielsilva/butterdocs/tree/master',
 
     // Enable single line breaks
     'md_breaks' => true,

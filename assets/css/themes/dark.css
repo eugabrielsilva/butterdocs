@@ -1,8 +1,13 @@
 /* Syntax highlighter theme (from https://highlightjs.org) */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/github-dark.min.css');
 
+/* Font (from https://fonts.google.com) */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
 /* Theme colors */
 :root {
+    --font: 'Montserrat';
+    --code-font: 'Roboto Mono';
     --bg-color: #212121;
     --menu-bg-color: #272727;
     --text-color: #ffffff;
