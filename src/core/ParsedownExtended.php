@@ -69,6 +69,9 @@ class ParsedownExtended extends ParsedownExtra
             parent::__construct();
         }
 
+        // Support for GitHub alerts, made by Meng-Heng and improved by Gabriel Silva
+        $this->BlockTypes['>'][] = 'Alert';
+
         // Initialize default options
         $this->options = $this->defaultOptions;
     }
@@ -982,5 +985,42 @@ class ParsedownExtended extends ParsedownExtra
         }
 
         return $markup;
+    }
+
+    /*
+        Support for GitHub alerts, made by Meng-Heng and improved by Gabriel Silva
+        source: https://github.com/Meng-Heng/WebsiteAlerts
+    */
+    protected function blockQuote($block)
+    {
+        try {
+            if (preg_match('/^\>\s*\[\!(IMPORTANT|TIP|NOTE|WARNING|CAUTION)\]\s(.*)/i', $block['text'], $matches)) {
+                $alertType = strtolower($matches[1]);
+                $alertTitle = ucfirst($alertType);
+                $alertContent = ltrim($matches[2]);
+
+                return $block = array(
+                    'element' => array(
+                        'name' => 'div',
+                        'attributes' => array('class' => "markdown-alert markdown-alert-$alertType"),
+                        'handler' => 'elements',
+                        'text' => array(
+                            array(
+                                'name' => 'p',
+                                'attributes' => array('class' => "markdown-alert-title"),
+                                'text' => $alertTitle,
+                            ),
+                            array(
+                                'name' => 'p',
+                                'text' => $alertContent,
+                            )
+                        )
+                    )
+                );
+            }
+            return parent::blockQuote($block);
+        } catch (Error $e) {
+            return $e;
+        }
     }
 }
